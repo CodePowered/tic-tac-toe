@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tic-Tac-Toe{% endblock %}
+
+{% block body %}
+    <section>
+        <h1 class="head-title">Tic-Tac-Toe</h1>
+    </section>
+
+    <section id="game-section">
+        <div class="block">
+            <div class="ttt-strategy">
+                <label for="ttt-strategy">Strategy:</label>
+                <select id="ttt-strategy" {{ strategies|length <= 1 ? 'disabled' }}>
+                    {% for value, name in strategies %}
+                    <option value="{{ value }}">{{ name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <table class="ttt-board" id="ttt-board">
+                <tbody>
+                {% for row in 0..2 %}
+                    <tr>
+                        {% for column in 0..2 %}
+                            <td id="ttt-cell-{{ row }}-{{ column }}" data-ttt-cell></td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section>
+        <div class="block statistics">
+            <h3>Statistics</h3>
+            <table>
+                <tbody>
+                    <tr>
+                        <th>Played</th>
+                        <th>Won</th>
+                        <th>Lost</th>
+                        <th>Draw</th>
+                    </tr>
+                    <tr>
+                        <td id="statistics-played">0</td>
+                        <td id="statistics-won">0</td>
+                        <td id="statistics-lost">0</td>
+                        <td id="statistics-draw">0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <div id="loading-cover" class="loading-cover" style="display: none;">
+        <img src="{{ asset('build/images/double-ring.gif') }}" alt="Loading..."/>
+    </div>
+{% endblock %}

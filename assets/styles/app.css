@@ -1,0 +1,103 @@
+body {
+    min-width: 500px;
+    margin: 0;
+    background-color: lightgray;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+table {
+    margin: 0;
+}
+
+td, th {
+    text-align: center;
+}
+
+.loading-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(211, 211, 211, 0.6);
+}
+
+.loading-cover > img {
+    width: 256px;
+    height: 256px;
+}
+
+section {
+    width: 532px;
+    margin: 30px auto;
+    text-align: center;
+}
+
+.block {
+    padding: 30px;
+    background: #ffffff;
+    border: 1px solid darkgray;
+    border-radius: 10px;
+}
+
+table.ttt-board {
+    width: 470px;
+    height: 470px;
+    border-collapse: collapse;
+}
+
+table.ttt-board tr > td {
+    vertical-align: center;
+    width: 150px;
+    height: 150px;
+    padding: 0;
+    background: #ffffff;
+    border-color: #7d0000;
+    border-style: solid none none solid;
+    border-width: 10px;
+    cursor: pointer;
+    user-select: none;
+    color: #00384c;
+    text-align: center;
+    font-size: 80px;
+    font-weight: bold;
+}
+
+table.ttt-board tr > td:first-child {
+    border-left-style: none;
+}
+
+table.ttt-board tr:first-child > td {
+    border-top-style: none;
+}
+
+table.ttt-board tr > td[data-ttt-cell]:hover {
+    background: #bad0db;
+}
+
+.ttt-strategy, .statistics h3 {
+    margin: 0 0 15px;
+}
+
+.statistics table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.statistics tr > * {
+    padding: 5px 10px;
+    border-color: grey;
+    border-style: dashed none none dashed;
+    border-width: 1px;
+}
+
+.statistics tr > *:first-child {
+    border-left-style: none;
+}
+
+.statistics tr:first-child > * {
+    border-top-style: none;
+}
