@@ -9,25 +9,35 @@
 
     <section id="game-section">
         <div class="block">
-            <div class="ttt-strategy">
-                <label for="ttt-strategy">Strategy:</label>
-                <select id="ttt-strategy" {{ strategies|length <= 1 ? 'disabled' }}>
+            <div class="ttt-strategy-box">
+                <label for="ttt-strategy-dropdown">Strategy:</label>
+                <select id="ttt-strategy-dropdown" {{ strategies|length <= 1 ? 'disabled' }}>
                     {% for value, name in strategies %}
                     <option value="{{ value }}">{{ name }}</option>
                     {% endfor %}
                 </select>
             </div>
-            <table class="ttt-board" id="ttt-board">
-                <tbody>
-                {% for row in 0..2 %}
-                    <tr>
-                        {% for column in 0..2 %}
-                            <td id="ttt-cell-{{ row }}-{{ column }}" data-ttt-cell></td>
-                        {% endfor %}
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            <div class="relative">
+                <table class="ttt-board" id="ttt-board">
+                    <tbody>
+                    {% for row in 0..2 %}
+                        <tr>
+                            {% for column in 0..2 %}
+                                <td id="ttt-cell-{{ row }}-{{ column }}" data-ttt-cell></td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                <div id="loading-cover" class="loading-cover">
+                    <div>
+                        <img id="loading-image" src="{{ asset('build/images/double-ring.gif') }}" alt="Loading..." style="display: none;"/>
+                        <div id="board-message" class="message" style="display: none;"></div>
+                        <button id="start-new-game" class="button" style="display: none;">Start new game</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -52,8 +62,4 @@
             </table>
         </div>
     </section>
-
-    <div id="loading-cover" class="loading-cover" style="display: none;">
-        <img src="{{ asset('build/images/double-ring.gif') }}" alt="Loading..."/>
-    </div>
 {% endblock %}
