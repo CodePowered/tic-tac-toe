@@ -49,6 +49,6 @@ class GameApiController extends AbstractApiController
     {
         $game = $this->gameManager->findActiveGame();
 
-        return $this->buildResponse($game, Response::HTTP_CREATED);
+        return $this->buildResponse($game);
     }
 }

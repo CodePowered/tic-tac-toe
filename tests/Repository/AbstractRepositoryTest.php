@@ -13,9 +13,4 @@ abstract class AbstractRepositoryTest extends KernelTestCase
         self::bootKernel();
         $this->createSchema($this->getNeededEntityClasses());
     }
-
-    protected function getRealService(string $className): object
-    {
-        return self::$container->get($className);
-    }
 }

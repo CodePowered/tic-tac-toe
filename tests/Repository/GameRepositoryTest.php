@@ -3,11 +3,13 @@
 namespace App\Tests\Repository;
 
 use App\Entity\Game;
+use App\Exception\DataNotFoundException;
 use App\Repository\GameRepository;
+use App\Repository\GameRepositoryInterface;
 
 class GameRepositoryTest extends AbstractRepositoryTest
 {
-    private GameRepository $repository;
+    private GameRepositoryInterface $repository;
 
     protected function setUp(): void
     {
@@ -21,6 +23,12 @@ class GameRepositoryTest extends AbstractRepositoryTest
             new Game('any', 'O', '---------', 'in progress', 1),
             $this->repository->save(new Game('any', 'O'))
         );
+    }
+
+    public function testNotFoundById(): void
+    {
+        $this->expectException(DataNotFoundException::class);
+        $this->repository->getById(1);
     }
 
     protected function getNeededEntityClasses(): array

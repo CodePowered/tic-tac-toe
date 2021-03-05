@@ -8,7 +8,7 @@ namespace PHPSTORM_META {
         ])
     );
     override(
-        \App\Tests\Repository\AbstractRepositoryTest::getRealService(),
+        \App\Tests\Service\ContainerHelperTestTrait::getRealService(),
         map([
             '' => '@'
         ])

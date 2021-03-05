@@ -2,11 +2,14 @@
 
 namespace App\Tests\Repository;
 
+use App\Tests\Service\ContainerHelperTestTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 
 trait RepositoryTestTrait
 {
+    use ContainerHelperTestTrait;
+
     private SchemaTool $schemaTool;
     private array $classesMetadata;
 
