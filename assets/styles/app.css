@@ -1,7 +1,8 @@
 body {
     min-width: 500px;
     margin: 0;
-    background-color: lightgray;
+    background-color: #ccbcb8;
+    color: #937871;
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -34,20 +35,29 @@ td, th {
     height: 256px;
 }
 
+.head-title {
+    color: #655551;
+}
+
 .button {
     width: 180px;
     height: 40px;
     padding: 2px 5px;
-    background: lightgray;
-    border: 1px darkgray solid;
+    background: #ccbcb8;
+    border: 1px #655551 solid;
     border-radius: 5px;
+    cursor: pointer;
+    color: #655551;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
 }
 
 .button:hover {
-    background: darkgray;
-    cursor: pointer;
+    background: #daccc8;
+}
+
+.button:active {
+    background: #a98c85;
 }
 
 section {
@@ -59,7 +69,7 @@ section {
 .block {
     padding: 30px;
     background: #ffffff;
-    border: 1px solid darkgray;
+    border: 1px solid #655551;
     border-radius: 10px;
 }
 
@@ -75,12 +85,12 @@ table.ttt-board tr > td {
     height: 150px;
     padding: 0;
     background: #ffffff;
-    border-color: #b57070;
+    border-color: #ccbcb8;
     border-style: solid none none solid;
     border-width: 10px;
     cursor: pointer;
     user-select: none;
-    color: #00384c;
+    color: #a98c85;
     text-align: center;
     font-size: 80px;
     font-weight: bold;
@@ -95,11 +105,12 @@ table.ttt-board tr:first-child > td {
 }
 
 table.ttt-board tr > td[data-ttt-cell]:hover {
-    background: #bad0db;
+    background: #e2d5d2;
 }
 
 .ttt-strategy-box, .statistics h3, .message {
     margin: 0 0 15px;
+    font-weight: bold;
 }
 
 .statistics table {
