@@ -41,6 +41,21 @@ $(function() {
         overlay.hide();
     }
 
+    const onError = function (jqXHR) {
+        showOverlay(false, 'Error occurred. Check console.', true);
+        console.error('API error occurred.', jqXHR);
+    };
+
+    const getJson = function (path, onSuccess) {
+        $.ajax({
+            method: 'GET',
+            url: path,
+            dataType: 'json',
+            success: onSuccess,
+            error: onError,
+        });
+    }
+
     const sendJson = function (path, dataObject, onSuccess) {
         $.ajax({
             method: 'POST',
@@ -48,10 +63,7 @@ $(function() {
             dataType: 'json',
             data: JSON.stringify(dataObject),
             success: onSuccess,
-            error: function (jqXHR) {
-                showOverlay(false, 'Error occurred. Check console.', true);
-                console.error('API error occurred.', jqXHR);
-            }
+            error: onError,
         });
     }
 
@@ -60,9 +72,9 @@ $(function() {
         jElement.text(mark);
 
         if (mark !== '') {
-            jElement.removeProp('data-ttt-cell')
+            jElement.removeAttr('data-ttt-cell')
         } else {
-            jElement.prop('data-ttt-cell')
+            jElement.attr('data-ttt-cell', '')
         }
     }
 
@@ -78,20 +90,24 @@ $(function() {
         )
     }
 
-    startGameButton.on('click', function () {
+    const consumeGameAndDrawBoard = function (activeGame) {
+        game = activeGame;
+        redrawBoard(game.board)
+        hideOverlay();
+    }
+
+    const loadNewGame = function () {
         sendJson(
             '/game',
             {
                 strategy: aiStrategySelector.val(),
                 playerMark: game.playerMark,
             },
-            function (newGame) {
-                game = newGame;
-                redrawBoard(game.board)
-                hideOverlay();
-            }
+            consumeGameAndDrawBoard
         )
-    })
+    }
+
+    startGameButton.on('click', loadNewGame)
 
     $('#ttt-board').on('click', '[data-ttt-cell]', function () {
         showOverlay(true, null, false);
@@ -106,18 +122,30 @@ $(function() {
                 mark: game.playerMark,
             },
             function (gameWithMove) {
+                let move = gameWithMove.opponentMove;
+                if (move) {
+                    markByCoords(move.row, move.column, move.mark)
+                }
+
                 let status = gameWithMove.status;
                 if (statusMessages.hasOwnProperty(status)) {
                     showOverlay(false, statusMessages[status], true);
                 } else {
-                    let move = gameWithMove.opponentMove;
-                    markByCoords(move.row, move.column, move.mark)
                     hideOverlay();
                 }
             }
         )
     });
 
-    // Show new game button (loading unfinished game is yet not supported)
-    showOverlay(false, 'No active game found.', true);
+    showOverlay(true, null, false);
+    getJson(
+        '/game/active',
+        function (activeGame) {
+            if (activeGame) {
+                consumeGameAndDrawBoard(activeGame)
+            } else {
+                loadNewGame()
+            }
+        }
+    )
 });

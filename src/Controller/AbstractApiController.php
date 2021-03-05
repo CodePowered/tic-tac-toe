@@ -24,7 +24,7 @@ abstract class AbstractApiController extends AbstractController
         return $this->serializer->deserialize($request->getContent(), $className, self::API_FORMAT);
     }
 
-    protected function buildResponse(object $object, int $status = Response::HTTP_OK): Response
+    protected function buildResponse(?object $object, int $status = Response::HTTP_OK): Response
     {
         return new JsonResponse(
             $this->serializer->serialize($object, self::API_FORMAT),

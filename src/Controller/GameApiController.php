@@ -41,4 +41,14 @@ class GameApiController extends AbstractApiController
 
         return $this->buildResponse($move, Response::HTTP_CREATED);
     }
+
+    /**
+     * @Route("/game/active", name="get_active_game", methods={"GET"})
+     */
+    public function getActiveGame(): Response
+    {
+        $game = $this->gameManager->findActiveGame();
+
+        return $this->buildResponse($game, Response::HTTP_CREATED);
+    }
 }

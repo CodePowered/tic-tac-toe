@@ -65,4 +65,11 @@ class GameManager
     {
         return $move->getRow() * GameModel::BOARD_SIZE + $move->getColumn();
     }
+
+    public function findActiveGame(): ?GameModel
+    {
+        $gameEntity = $this->gameRepository->findOneInProgress();
+
+        return $gameEntity !== null ? GameModel::fromEntity($gameEntity) : null;
+    }
 }

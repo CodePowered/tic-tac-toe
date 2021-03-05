@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Game;
 use App\Exception\DataNotFoundException;
+use App\Model\Game as GameModel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -34,5 +35,10 @@ class GameRepository extends ServiceEntityRepository
         }
 
         throw new DataNotFoundException(sprintf("Game '%d' doesn't exist", $id));
+    }
+
+    public function findOneInProgress(): ?Game
+    {
+        return $this->findOneBy(['status' => GameModel::STATUS_IN_PROGRESS], ['id' => 'ASC']);
     }
 }
