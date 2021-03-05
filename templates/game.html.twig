@@ -13,7 +13,7 @@
                 <label for="ttt-strategy-dropdown">Strategy:</label>
                 <select id="ttt-strategy-dropdown" {{ strategies|length <= 1 ? 'disabled' }}>
                     {% for value, name in strategies %}
-                    <option value="{{ value }}">{{ name }}</option>
+                        <option value="{{ value }}">{{ name }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -23,7 +23,12 @@
                     {% for row in 0..2 %}
                         <tr>
                             {% for column in 0..2 %}
-                                <td id="ttt-cell-{{ row }}-{{ column }}" data-ttt-cell></td>
+                                <td
+                                    id="ttt-cell-{{ row }}-{{ column }}"
+                                    data-ttt-cell
+                                    data-row="{{ row }}"
+                                    data-column="{{ column }}"
+                                ></td>
                             {% endfor %}
                         </tr>
                     {% endfor %}
@@ -32,7 +37,12 @@
 
                 <div id="loading-cover" class="loading-cover">
                     <div>
-                        <img id="loading-image" src="{{ asset('build/images/double-ring.gif') }}" alt="Loading..." style="display: none;"/>
+                        <img
+                            id="loading-image"
+                            src="{{ asset('build/images/double-ring.gif') }}"
+                            alt="Loading..."
+                            style="display: none;"
+                        />
                         <div id="board-message" class="message" style="display: none;"></div>
                         <button id="start-new-game" class="button" style="display: none;">Start new game</button>
                     </div>

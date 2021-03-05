@@ -14,6 +14,12 @@ $(function() {
         status: null,
     };
 
+    const statusMessages = {
+        won: 'You won!',
+        lost: 'You lost...',
+        draw: "It's as draw.",
+    };
+
     const overlay = $('#loading-cover');
     const loadingImage = $('#loading-image');
     const messageBox = $('#board-message');
@@ -21,6 +27,7 @@ $(function() {
     const aiStrategySelector = $('#ttt-strategy-dropdown');
 
     const showOverlay = function (showLoader, message, showButton) {
+        overlay.show();
         loadingImage.toggle(showLoader);
         if (message) {
             messageBox.text(message).show();
@@ -49,9 +56,26 @@ $(function() {
     }
 
     const markCell = function (jElement, mark) {
-        jElement
-            .removeAttr('data-ttt-cell')
-            .text(mark);
+        mark = mark !== '-' ? mark : ''
+        jElement.text(mark);
+
+        if (mark !== '') {
+            jElement.removeProp('data-ttt-cell')
+        } else {
+            jElement.prop('data-ttt-cell')
+        }
+    }
+
+    const markByCoords = function (row, column, mark) {
+        markCell($('#ttt-cell-' + row  + '-' + column), mark)
+    }
+
+    const redrawBoard = function (board) {
+        board.forEach(
+            (row, rowKey) => row.forEach(
+                (mark, columnKey) => markByCoords(rowKey, columnKey, mark)
+            )
+        )
     }
 
     startGameButton.on('click', function () {
@@ -63,6 +87,7 @@ $(function() {
             },
             function (newGame) {
                 game = newGame;
+                redrawBoard(game.board)
                 hideOverlay();
             }
         )
@@ -70,8 +95,27 @@ $(function() {
 
     $('#ttt-board').on('click', '[data-ttt-cell]', function () {
         showOverlay(true, null, false);
-        markCell($(this), game.playerMark);
-        setTimeout(hideOverlay, 200);
+        let cell = $(this);
+        markCell(cell, game.playerMark);
+        sendJson(
+            '/move',
+            {
+                game: game.id,
+                row: cell.data('row'),
+                column: cell.data('column'),
+                mark: game.playerMark,
+            },
+            function (gameWithMove) {
+                let status = gameWithMove.status;
+                if (statusMessages.hasOwnProperty(status)) {
+                    showOverlay(false, statusMessages[status], true);
+                } else {
+                    let move = gameWithMove.opponentMove;
+                    markByCoords(move.row, move.column, move.mark)
+                    hideOverlay();
+                }
+            }
+        )
     });
 
     // Show new game button (loading unfinished game is yet not supported)

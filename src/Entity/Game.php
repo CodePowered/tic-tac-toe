@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Exception\InvalidActionException;
 use App\Model\Game as GameModel;
 use App\Repository\GameRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -80,5 +81,22 @@ class Game
     public function getStatus(): string
     {
         return $this->status;
+    }
+
+    public function setCell(string $mark, int $position): self
+    {
+        if ($this->board[$position] !== GameModel::MARK_EMPTY) {
+            throw new InvalidActionException('Cell cannot be changed!');
+        }
+        $this->board[$position] = $mark;
+
+        return $this;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
     }
 }

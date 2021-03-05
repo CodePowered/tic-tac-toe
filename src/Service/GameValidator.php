@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Model\Move;
 use App\Model\NewGame;
 
 class GameValidator extends AbstractValidator
@@ -10,6 +11,13 @@ class GameValidator extends AbstractValidator
     {
         $this->throwFirstErrorAsException(
             $this->validator->validate($game, null, [NewGame::VALIDATOR_GROUP_NEW_GAME])
+        );
+    }
+
+    public function validateMove(Move $move): void
+    {
+        $this->throwFirstErrorAsException(
+            $this->validator->validate($move)
         );
     }
 }

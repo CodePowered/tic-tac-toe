@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Model\Move;
 use App\Model\NewGame;
 use App\Service\GameManager;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,5 +31,14 @@ class GameApiController extends AbstractApiController
         );
 
         return $this->buildResponse($game, Response::HTTP_CREATED);
+    }
+
+    /**
+     * @Route("/move", name="make_move", methods={"POST"})
+     */
+    public function makeMove(Request $request): Response {
+        $move = $this->gameManager->makeMove($this->buildObject(Move::class, $request));
+
+        return $this->buildResponse($move, Response::HTTP_CREATED);
     }
 }

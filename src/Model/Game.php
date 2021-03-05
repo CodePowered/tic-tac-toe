@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use App\Entity\Game as GameEntity;
+
 class Game extends AbstractGame
 {
     // Statuses from player point of view
@@ -10,7 +12,7 @@ class Game extends AbstractGame
     public const STATUS_LOST = 'lost';
     public const STATUS_DRAW = 'draw';
 
-    private const BOARD_SIZE = 3;
+    public const BOARD_SIZE = 3;
 
     private int $id;
     private array $board;
@@ -24,7 +26,7 @@ class Game extends AbstractGame
         $this->status = $status;
     }
 
-    public static function fromEntity(\App\Entity\Game $gameEntity): self
+    public static function fromEntity(GameEntity $gameEntity): self
     {
         return new static(
             $gameEntity->getId(),
@@ -35,7 +37,7 @@ class Game extends AbstractGame
         );
     }
 
-    private static function splitBoard(string $board): array
+    protected static function splitBoard(string $board): array
     {
         return array_map(
             static fn(string $columns) => str_split($columns),

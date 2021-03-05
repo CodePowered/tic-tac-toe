@@ -21,12 +21,12 @@ abstract class AbstractGame
     /**
      * @AppAssert\IsAiStrategy(groups={AbstractGame::VALIDATOR_GROUP_NEW_GAME})
      */
-    protected string $strategy;
+    private string $strategy;
 
     /**
      * @Assert\Choice(choices=AbstractGame::VALID_PLAYER_MARKS, groups={AbstractGame::VALIDATOR_GROUP_NEW_GAME})
      */
-    protected string $playerMark;
+    private string $playerMark;
 
     public function __construct(string $strategy, string $playerMark) {
         $this->strategy = $strategy;

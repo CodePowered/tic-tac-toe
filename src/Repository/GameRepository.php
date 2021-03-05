@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Game;
+use App\Exception\DataNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -20,5 +21,18 @@ class GameRepository extends ServiceEntityRepository
         $em->flush();
 
         return $game;
+    }
+
+    /**
+     * @throws DataNotFoundException
+     */
+    public function getById(int $id): Game
+    {
+        $game = $this->find($id);
+        if ($game !== null) {
+            return $game;
+        }
+
+        throw new DataNotFoundException(sprintf("Game '%d' doesn't exist", $id));
     }
 }
