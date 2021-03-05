@@ -5,21 +5,21 @@ namespace App\Service;
 use App\Entity\Game as GameEntity;
 use App\Exception\DataNotFoundException;
 use App\Exception\UnsupportedException;
+use App\Model\Game as GameModel;
 use App\Model\GameWithOpponentMove;
 use App\Model\Move;
 use App\Model\NewGame;
-use App\Repository\GameRepository;
-use App\Model\Game as GameModel;
+use App\Repository\GameRepositoryInterface;
 
 class GameManager
 {
-    private GameRepository $gameRepository;
+    private GameRepositoryInterface $gameRepository;
     private GameValidator $gameValidator;
     private GameStatusChecker $statusChecker;
     private AiStrategyCollection $strategyCollection;
 
     public function __construct(
-        GameRepository $gameRepository,
+        GameRepositoryInterface $gameRepository,
         GameValidator $gameValidator,
         GameStatusChecker $statusChecker,
         AiStrategyCollection $strategyCollection

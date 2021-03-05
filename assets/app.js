@@ -107,6 +107,11 @@ $(function() {
         )
     }
 
+    const incrementStat = function (key) {
+        let jElement = $('#statistics-' + key)
+        jElement.text(parseInt(jElement.text(), 10) + 1)
+    }
+
     startGameButton.on('click', loadNewGame)
 
     $('#ttt-board').on('click', '[data-ttt-cell]', function () {
@@ -130,6 +135,8 @@ $(function() {
                 let status = gameWithMove.status;
                 if (statusMessages.hasOwnProperty(status)) {
                     showOverlay(false, statusMessages[status], true);
+                    incrementStat(status)
+                    incrementStat('total')
                 } else {
                     hideOverlay();
                 }
